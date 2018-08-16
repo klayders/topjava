@@ -20,5 +20,6 @@
     </ul>
 </section>
 <jsp:include page="fragments/footer.jsp"/>
+
 </body>
 </html>

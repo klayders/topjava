@@ -8,12 +8,15 @@ import org.junit.rules.ExternalResource;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.TimingRules;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -27,9 +30,15 @@ import static ru.javawebinar.topjava.util.ValidationUtil.getRootCause;
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 abstract public class AbstractServiceTest {
+    @Autowired
+    public Environment env;
+
     @ClassRule
     public static ExternalResource summary = TimingRules.SUMMARY;
-
+    public boolean isJpaBased() {
+//        return Arrays.stream(env.getActiveProfiles()).anyMatch(p -> Profiles.JPA.equals(p) || Profiles.DATAJPA.equals(p));
+       return env.acceptsProfiles(Profiles.JPA, Profiles.DATAJPA);
+    }
     @Rule
     public Stopwatch stopwatch = TimingRules.STOPWATCH;
 

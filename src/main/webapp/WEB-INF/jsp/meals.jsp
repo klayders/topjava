@@ -14,7 +14,7 @@
 
 <section>
     <h3>Meals</h3>
-    <form method="post" action="meals?action=filter">
+    <form method="post" action="${pageContext.request.contextPath}/meals/filter">
         <dl>
             <dt>From Date:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -34,7 +34,7 @@
         <button type="submit">Filter</button>
     </form>
     <hr/>
-    <a href="meals/create">Add Meal</a>
+    <a href="${pageContext.request.contextPath}/meals/create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -57,8 +57,8 @@
                 </td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
-                <td><a href="meals/update/${meal.id}">Update</a></td>
-                <td><a href="meals/delete/${meal.id}">Delete</a></td>
+                <td><a href="${pageContext.request.contextPath}/meals/update/${meal.id}">Update</a></td>
+                <td><a href="${pageContext.request.contextPath}/meals/delete/${meal.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>

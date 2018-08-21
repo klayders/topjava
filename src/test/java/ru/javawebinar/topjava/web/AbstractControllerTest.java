@@ -37,15 +37,15 @@ abstract public class AbstractControllerTest {
 
     protected MockMvc mockMvc;
 
-    @Autowired
+    @Autowired(required = false)
     private CacheManager cacheManager;
 
     @Autowired(required = false)
     private JpaUtil jpaUtil;
 
-    @Autowired
+    @Autowired(required = false)
     protected UserService userService;
-    @Autowired
+    @Autowired(required = false)
     protected MealService mealService;
 
     @Autowired

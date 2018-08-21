@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.SecurityUtil;
 import ru.javawebinar.topjava.web.json.JsonUtil;
@@ -39,10 +40,11 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
     @Test
     void testGetAll() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1)));
+                .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
     }
     @Test
     void testUpdate() throws Exception{
@@ -68,17 +70,17 @@ class MealRestControllerTest extends AbstractControllerTest {
     }
     @Test
     void testGetBetween() throws Exception{
-        ResultActions resultActions = mockMvc.perform(get(REST_URL + "between?startDateTime=2015-05-30T00:00&endDateTime=2015-05-31T20:00"))
+         mockMvc.perform(get(REST_URL + "between?startDateTime=2015-05-30T00:00&endDateTime=2015-05-31T20:00"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(contentJson(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1));
+                .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
 
     }
     @Test
     void testGetBetweenDates() throws Exception{
-        ResultActions resultActions = mockMvc.perform(get(REST_URL + "filter?startDate=2015-05-30&startTime=01:00&endDate=2015-05-31&endTime=20:00"))
+      mockMvc.perform(get(REST_URL + "filter?startDate=2015-05-30&startTime=01:00&endDate=2015-05-31&endTime=20:00"))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(contentJson(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1));
+                .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
     }
 }

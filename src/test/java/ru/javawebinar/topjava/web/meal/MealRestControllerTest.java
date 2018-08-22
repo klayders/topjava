@@ -88,4 +88,20 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
     }
+
+    @Test
+    void testGetBetweenTest() throws Exception{
+        mockMvc.perform(get(REST_URL + "filter?startDate=&startTime=01:00&endDate=2015-05-31&endTime=20:00"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
+    }
+
+    @Test
+    void testGetBetweenTestBet() throws Exception{
+        mockMvc.perform(get(REST_URL + "between?startDateTime=&endDateTime=2015-05-31T20:00"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(contentJson(MealsUtil.getWithExceeded(MEALS, SecurityUtil.authUserCaloriesPerDay())));
+    }
 }

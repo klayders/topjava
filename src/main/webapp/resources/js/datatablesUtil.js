@@ -1,8 +1,8 @@
 function makeEditable() {
-    $(".delete").click(function () {
-        deleteRow($(this).attr("id"));
-    });
 
+    var pathFilter = ajaxUrl + "filter";
+    $.post(pathFilter, function (data) {
+        datatableApi.clear().rows.add(data).draw();});
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(jqXHR);
     });
@@ -11,11 +11,17 @@ function makeEditable() {
     $.ajaxSetup({cache: false});
 }
 
+
 function add() {
     $("#detailsForm").find(":input").val("");
     $("#editRow").modal();
 }
-
+function deletes() {
+    $(".strr").click(function () {
+        deleteRow($(this).attr("id"));
+    });
+    $.ajaxSetup({cache: false});
+}
 function deleteRow(id) {
     $.ajax({
         url: ajaxUrl + id,
@@ -46,6 +52,41 @@ function save() {
         }
     });
 }
+
+
+
+
+function filter() {
+    var filterId = $(".filter").attr("id");
+    var form = $('#' + filterId);
+    $.ajax({
+        url: ajaxUrl + "filter",
+        type: "POST",
+        data: jQuery(form).serialize(),
+        success: function () {
+         updateTableByFilter();
+            successNoty("filtred");
+        }
+    });
+    $.ajaxSetup({cache: true});
+}
+
+function updateTableByFilter() {
+    var pathFilter = ajaxUrl + "filter";
+    $.post(pathFilter, function (data) {
+        datatableApi.clear().rows.add(data).draw();
+    });
+
+}
+
+
+
+
+
+
+
+
+
 
 var failedNote;
 

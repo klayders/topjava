@@ -13,26 +13,39 @@
 
     <h3><spring:message code="meal.title"/></h3>
 
-<form class="filter" method="POST" action="ajax/meals/filter" id="filter_id">
+<form method="post" class="form-horizontal"  role="form" id="filter">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="startDate">From Date:</label>
 
-<dl>
-            <dt><spring:message code="meal.startDate"/>:</dt>
-            <dd><input type="date" name="startDate" id="startDate" value="${param.startDate}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.endDate"/>:</dt>
-            <dd><input type="date" name="endDate" id="endDate" value="${param.endDate}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.startTime"/>:</dt>
-            <dd><input type="time" name="startTime" id="startTime" value="${param.startTime}"></dd>
-        </dl>
-        <dl>
-            <dt><spring:message code="meal.endTime"/>:</dt>
-            <dd><input type="time" name="endTime" id="endTime" value="${param.endTime}"></dd>
-        </dl>
-    </form>
-<a onclick="makeEditable()">FILTER</a>
+        <div class="col-sm-2">
+            <input type="date" name="startDate" id="startDate">
+        </div>
+
+        <label class="control-label col-sm-2" for="endDate">To Date:</label>
+
+        <div class="col-sm-2">
+            <input type="date" name="endDate" id="endDate">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="startTime">From Time:</label>
+
+        <div class="col-sm-2">
+            <input type="time" name="startTime" id="startTime">
+        </div>
+
+        <label class="control-label col-sm-2" for="endTime">To Time:</label>
+
+        <div class="col-sm-2">
+            <input type="time" name="endTime" id="endTime">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-8">
+            <button type="submit" class="btn btn-primary pull-right">Filter</button>
+        </div>
+    </div>
+</form>
     <div class="jumbotron pt-4">
         <div class="container">
             <h3><spring:message code="meal.title"/></h3>

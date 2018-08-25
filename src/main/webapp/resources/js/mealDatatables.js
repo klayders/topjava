@@ -1,35 +1,50 @@
 var ajaxUrl = "ajax/meals/";
 var datatableApi;
-
+function updateTable() {
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl + 'filter',
+        data: $('#filter').serialize(),
+        success: function (data) {
+            updateTableByData(data);
+        }
+    });
+    return false;
+}
 $(function () {
-    datatableApi = $("#datatable").DataTable({
-        "paging": false,
-        "info": true,
-        "columns": [
-            {
-                "data": "dateTime"
-            },
-            {
-                "data": "description"
-            },
-            {
-                "data": "calories"
-            },
-            {
-                "defaultContent": "Edit",
-                "orderable": false
-            },
-            {
-                "defaultContent": "Delete",
-                "orderable": false
-            }
-        ],
-        "order": [
-            [
-                0,
-                "asc"
+    datatableApi = $('#datatable').dataTable(
+        {
+            "bPaginate": false,
+            "bInfo": true,
+            "aoColumns": [
+                {
+                    "mData": "dateTime"
+                },
+                {
+                    "mData": "description"
+                },
+                {
+                    "mData": "calories"
+                },
+                {
+                    "sDefaultContent": "Edit",
+                    "bSortable": false
+                },
+                {
+                    "sDefaultContent": "Delete",
+                    "bSortable": false
+                }
+            ],
+            "aaSorting": [
+                [
+                    0,
+                    "desc"
+                ]
             ]
-        ]
+        });
+    $('#filter').submit(function () {
+        updateTable();
+        return false;
     });
     makeEditable();
 });

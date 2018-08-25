@@ -1,14 +1,28 @@
 function makeEditable() {
-
-    var pathFilter = ajaxUrl + "filter";
-    $.post(pathFilter, function (data) {
-        datatableApi.clear().rows.add(data).draw();});
-    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
-        failNoty(jqXHR);
+    $('#add').click(function () {
+        $('#id').val(0);
+        $('#editRow').modal();
     });
 
-    // solve problem with cache in IE: https://stackoverflow.com/a/4303862/548473
-    $.ajaxSetup({cache: false});
+    $('.delete').click(function () {
+        deleteRow($(this).attr("id"));
+    });
+
+    $('#detailsForm').submit(function () {
+        save();
+        return false;
+    });
+
+    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+        failNoty(event, jqXHR, options, jsExc);
+    });
+}
+function updateTableByData(data) {
+    datatableApi.fnClearTable();
+    $.each(data, function (key, item) {
+        datatableApi.fnAddData(item);
+    });
+    datatableApi.fnDraw();
 }
 
 
@@ -52,37 +66,6 @@ function save() {
         }
     });
 }
-
-
-
-
-function filter() {
-    var filterId = $(".filter").attr("id");
-    var form = $('#' + filterId);
-    $.ajax({
-        url: ajaxUrl + "filter",
-        type: "POST",
-        data: jQuery(form).serialize(),
-        success: function () {
-         updateTableByFilter();
-            successNoty("filtred");
-        }
-    });
-    $.ajaxSetup({cache: true});
-}
-
-function updateTableByFilter() {
-    var pathFilter = ajaxUrl + "filter";
-    $.post(pathFilter, function (data) {
-        datatableApi.clear().rows.add(data).draw();
-    });
-
-}
-
-
-
-
-
 
 
 

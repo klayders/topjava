@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.web.meal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 @Controller
 @RequestMapping(value = "/meals")
 public class JspMealController extends AbstractMealController {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
@@ -41,6 +44,8 @@ public class JspMealController extends AbstractMealController {
 
     @PostMapping
     public String updateOrCreate(HttpServletRequest request) {
+        log.info("method: updateOrCreate method: updateOrCreate method: updateOrCreate JSP JSP JSP CONTTOLLER priveeet");
+
         Meal meal = new Meal(LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
@@ -55,6 +60,8 @@ public class JspMealController extends AbstractMealController {
 
     @PostMapping("/filter")
     public String getBetween(HttpServletRequest request, Model model) {
+        log.info("getБитвин for user {} JSP JSP JSP CONTTOLLER priveeet");
+
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));

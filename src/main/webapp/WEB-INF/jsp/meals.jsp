@@ -10,77 +10,77 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 
 
+<div class="jumbotron pt-4">
+    <div class="container">
+        <h3><spring:message code="meal.title"/></h3>
+    <form method="post" class="form-horizontal" role="form" id="filter">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="startDate">From Date:</label>
 
-    <h3><spring:message code="meal.title"/></h3>
+            <div class="col-sm-2">
+                <input type="date" name="startDate" id="startDate">
+            </div>
 
-<form method="post" class="form-horizontal"  role="form" id="filter">
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="startDate">From Date:</label>
+            <label class="control-label col-sm-2" for="endDate">To Date:</label>
 
-        <div class="col-sm-2">
-            <input type="date" name="startDate" id="startDate">
+            <div class="col-sm-2">
+                <input type="date" name="endDate" id="endDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="startTime">From Time:</label>
+
+            <div class="col-sm-2">
+                <input type="time" name="startTime" id="startTime">
+            </div>
+
+            <label class="control-label col-sm-2" for="endTime">To Time:</label>
+
+            <div class="col-sm-2">
+                <input type="time" name="endTime" id="endTime">
+            </div>
         </div>
 
-        <label class="control-label col-sm-2" for="endDate">To Date:</label>
-
-        <div class="col-sm-2">
-            <input type="date" name="endDate" id="endDate">
+    </form>
+        <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-left" onclick="filter()">Filter</button>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="startTime">From Time:</label>
-
-        <div class="col-sm-2">
-            <input type="time" name="startTime" id="startTime">
+        <div class="form-group">
+                <button type="submit" class="btn btn-danger" onclick="clearFilter()">Clear</button>
         </div>
-
-        <label class="control-label col-sm-2" for="endTime">To Time:</label>
-
-        <div class="col-sm-2">
-            <input type="time" name="endTime" id="endTime">
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-8">
-            <button type="submit" class="btn btn-primary pull-right">Filter</button>
-        </div>
-    </div>
-</form>
-    <div class="jumbotron pt-4">
-        <div class="container">
-            <h3><spring:message code="meal.title"/></h3>
-            <button class="btn btn-primary" onclick="add()">
-                <span class="fa fa-plus"></span>
-                <spring:message code="common.add"/>
-            </button>
-            <table class="table table-striped" id="datatable">
-        <thead>
-        <tr>
-            <th><spring:message code="meal.dateTime"/></th>
-            <th><spring:message code="meal.description"/></th>
-            <th><spring:message code="meal.calories"/></th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <c:forEach items="${meals}" var="meal">
-            <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-            <tr class="strr" data-mealExceed="${meal.exceed}" id="${meal.id} ">
-                <td>
-                        <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                        <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
-                        <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
-                        ${fn:formatDateTime(meal.dateTime)}
-                </td>
-                <td>${meal.description}</td>
-                <td>${meal.calories}</td>
-                <td><a href="meals/update?id=${meal.id}"><spring:message code="common.update"/></a></td>
-                <td><a  onclick="deletes()"><span class="fa fa-remove"></span></a></td>
+        <h3><spring:message code="meal.title"/></h3>
+        <button class="btn btn-primary" onclick="add()">
+            <span class="fa fa-plus"></span>
+            <spring:message code="common.add"/>
+        </button>
+        <table class="table table-striped " id="datatable" >
+            <thead>
+            <tr>
+                <th><spring:message code="meal.dateTime"/></th>
+                <th><spring:message code="meal.description"/></th>
+                <th><spring:message code="meal.calories"/></th>
+                <th></th>
+                <th></th>
             </tr>
-        </c:forEach>
-    </table>
-        </div>
+            </thead>
+            <c:forEach items="${meals}" var="meal">
+                <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
+                <tr class="strr" data-mealExceed="${meal.exceed}" id="${meal.id} ">
+                    <td >
+                            <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
+                            <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
+                            <%--${fn:replace(meal.dateTime, 'T', ' ')}--%>
+                            ${fn:formatDateTime(meal.dateTime)}
+                    </td>
+                    <td>${meal.description}</td>
+                    <td>${meal.calories}</td>
+                    <td></td>
+                    <td><a onclick="deleteMeal()"><span class="fa fa-remove"></span></a></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
+</div>
 <div class="modal fade" tabindex="-1" id="editRow">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -99,7 +99,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="col-form-label"><spring:message code="meal.description"/></label>
+                        <label for="description" class="col-form-label"><spring:message
+                                code="meal.description"/></label>
                         <input type="text" class="form-control" id="description" name="description"
                                placeholder="<spring:message code="meal.description"/>">
                     </div>
@@ -116,7 +117,7 @@
                     <span class="fa fa-close"></span>
                     <spring:message code="common.cancel"/>
                 </button>
-                <button type="button" class="btn btn-primary" onclick="save()">
+                <button type="button" class="btn btn-primary" onclick="saveMeal()">
                     <span class="fa fa-check"></span>
                     <spring:message code="common.save"/>
                 </button>

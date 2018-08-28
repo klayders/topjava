@@ -36,11 +36,14 @@
                     <td><c:out value="${user.name}"/></td>
                     <td><a href="mailto:${user.email}">${user.email}</a></td>
                     <td>${user.roles}</td>
-                    <td><input type="checkbox"
-                               <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/></td>
+                    <td>
+                        <input type="checkbox"
+                               <c:if test="${user.enabled}">checked</c:if>
+                               onclick="enable($(this), ${user.id})"/>
+                    </td>
                     <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
                     <td><a><span class="fa fa-pencil"></span></a></td>
-                    <td><a onclick="deletes()" ><span class="fa fa-remove"></span></a></td>
+                    <td><a onclick="deleteUser()" ><span class="fa fa-remove"></span></a></td>
                 </tr>
             </c:forEach>
         </table>
@@ -82,7 +85,7 @@
                     <span class="fa fa-close"></span>
                     <spring:message code="common.cancel"/>
                 </button>
-                <button type="button" class="btn btn-primary" onclick="save()">
+                <button type="button" class="btn btn-primary" onclick="saveUser()">
                     <span class="fa fa-check"></span>
                     <spring:message code="common.save"/>
                 </button>

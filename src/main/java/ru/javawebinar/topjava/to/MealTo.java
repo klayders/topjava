@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.to;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.javawebinar.topjava.model.Meal;
 
 import javax.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 public class MealTo extends BaseTo implements Serializable {
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private  LocalDateTime dateTime;
 
     @NotBlank
@@ -57,6 +59,7 @@ public class MealTo extends BaseTo implements Serializable {
     public Meal asNewMeal(){
         return new Meal(null, dateTime, description, calories);
     }
+
     @Override
     public String toString() {
         return "MealTo{" +

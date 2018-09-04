@@ -45,7 +45,7 @@ public class MealAjaxController extends AbstractMealController {
             super.create(MealsUtil.createMealFromTo(mealTo));
         }
         else {
-            super.update(mealTo);
+            super.update(mealTo, mealTo.getId());
         }
     }
 

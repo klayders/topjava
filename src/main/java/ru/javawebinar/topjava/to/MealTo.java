@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 public class MealTo extends BaseTo implements Serializable {
     @NotNull
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private  LocalDateTime dateTime;
 
     @NotBlank

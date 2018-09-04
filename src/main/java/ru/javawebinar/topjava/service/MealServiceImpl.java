@@ -54,7 +54,6 @@ public class MealServiceImpl implements MealService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "meals", allEntries = true)
     public void update(MealTo mealTo, int userId) {
         Meal meal = get(mealTo.getId(), userId);
         repository.save(MealsUtil.updateMealFromTo(meal, mealTo), userId);

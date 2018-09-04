@@ -5,6 +5,13 @@ tr[data-mealExceed="false"] {
 tr[data-mealExceed="true"] {
     color: red;
 }
+.normal {
+    color: green;
+}
+
+.exceeded {
+    color: red;
+}
 
 .fa {
     cursor: pointer;

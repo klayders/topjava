@@ -87,4 +87,7 @@ $(function () {
         },
         "initComplete": makeEditable
     });
+    $('#datetimepicker').datetimepicker({
+        format:'unixtime'
+    });
 });
